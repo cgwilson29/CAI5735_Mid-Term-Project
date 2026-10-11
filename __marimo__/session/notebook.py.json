@@ -1,0 +1,212 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.25.1",
+    "script_metadata_hash": "b734170f1024f2dbaeef7eafb0ff6eec"
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "229818e3e1ffc377316772c9ea268df0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"cai5735-group-1-mid-term-project\">CAI5735 Group 1 Mid-Term Project</h1>\n<h2 id=\"karissa-kocourek-james-jobczynski-and-cameron-wilson\">Karissa Kocourek, James Jobczynski, and Cameron Wilson</h2>\n<span class=\"paragraph\">This Marimo notebook will serve as our mid-term project collaboration, and is comprised of an executable Marimo notebook and presentation slides.</span>\n<span class=\"paragraph\">Project Directions: Available <a href=\"https://docs.google.com/document/d/1pw1L-eRHP3wGzltgrNmSBa-1lKtNe4S59MkiHHbFHsk/edit?tab=t.0\" rel=\"noopener noreferrer\" target=\"_blank\">HERE</a>.</span>\n<span class=\"paragraph\"><b>Project submission due: October 15, 2026 at 23:59</b></span>\n<h1 id=\"research-question\">Research Question:</h1>\n<h2 id=\"how-is-antibiotic-resistance-related-to-country-income-group-and-does-it-vary-by-antibiotic-class\">How is antibiotic resistance related to country income group and does it vary by antibiotic class?</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "e76e8dbe4d9bf74eff98fef5f002130b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "d2d137613268692d8d4f3eb35050a913",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Load the target dataset through pandas' read_csv, and inspect the data to show basic descriptors such as head/tail, shape, length, etc.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "4950e72708f61a973e49cb4c957a5209",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "(Rows, Columns): (138, 16)\n\n<class 'pandas.DataFrame'>\nRangeIndex: 138 entries, 0 to 137\nData columns (total 16 columns):\n #   Column                           Non-Null Count  Dtype  \n---  ------                           --------------  -----  \n 0   record_id                        138 non-null    int64  \n 1   year                             138 non-null    int64  \n 2   country                          138 non-null    str    \n 3   iso3                             138 non-null    str    \n 4   who_region                       138 non-null    str    \n 5   income_group                     138 non-null    str    \n 6   pathogen                         138 non-null    str    \n 7   antibiotic_class                 138 non-null    str    \n 8   antibiotic_name                  138 non-null    str    \n 9   infection_type                   138 non-null    str    \n 10  resistance_pct                   138 non-null    float64\n 11  total_isolates_tested            138 non-null    int64  \n 12  resistant_isolates               138 non-null    int64  \n 13  susceptibility_testing_coverage  138 non-null    str    \n 14  data_source                      138 non-null    str    \n 15  notes                            23 non-null     str    \ndtypes: float64(1), int64(4), str(11)\nmemory usage: 17.4 KB\nNone\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "65c3f22c5c7c6fd1f0af3d55c834318f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Display the dataframe to show each column</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "a71fc4a28711d8ffa95f437847eacfcd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='PKri-0' random-id='37afc78b-791f-f5e0-3497-9d4b4c71227f'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;record_id&#92;&quot;:1,&#92;&quot;year&#92;&quot;:2018,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Fluoroquinolones&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ciprofloxacin&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Urinary Tract Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:67.2,&#92;&quot;total_isolates_tested&#92;&quot;:12450,&#92;&quot;resistant_isolates&#92;&quot;:8366,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:&#92;&quot;High fluoroquinolone resistance in South Asia&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:2,&#92;&quot;year&#92;&quot;:2019,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Fluoroquinolones&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ciprofloxacin&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Urinary Tract Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:68.9,&#92;&quot;total_isolates_tested&#92;&quot;:14200,&#92;&quot;resistant_isolates&#92;&quot;:9784,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:&#92;&quot;Trend: rising&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:3,&#92;&quot;year&#92;&quot;:2020,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Fluoroquinolones&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ciprofloxacin&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Urinary Tract Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:70.1,&#92;&quot;total_isolates_tested&#92;&quot;:11300,&#92;&quot;resistant_isolates&#92;&quot;:7922,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:&#92;&quot;COVID-19 impact on testing volumes&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:4,&#92;&quot;year&#92;&quot;:2021,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Fluoroquinolones&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ciprofloxacin&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Urinary Tract Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:71.4,&#92;&quot;total_isolates_tested&#92;&quot;:13800,&#92;&quot;resistant_isolates&#92;&quot;:9859,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:NaN},{&#92;&quot;record_id&#92;&quot;:5,&#92;&quot;year&#92;&quot;:2022,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Fluoroquinolones&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ciprofloxacin&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Urinary Tract Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:72.8,&#92;&quot;total_isolates_tested&#92;&quot;:15600,&#92;&quot;resistant_isolates&#92;&quot;:11357,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:NaN},{&#92;&quot;record_id&#92;&quot;:6,&#92;&quot;year&#92;&quot;:2023,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Fluoroquinolones&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ciprofloxacin&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Urinary Tract Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:74.1,&#92;&quot;total_isolates_tested&#92;&quot;:16900,&#92;&quot;resistant_isolates&#92;&quot;:12523,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS 2025 Report&#92;&quot;,&#92;&quot;notes&#92;&quot;:NaN},{&#92;&quot;record_id&#92;&quot;:7,&#92;&quot;year&#92;&quot;:2018,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Bloodstream Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:13.5,&#92;&quot;total_isolates_tested&#92;&quot;:4200,&#92;&quot;resistant_isolates&#92;&quot;:567,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:NaN},{&#92;&quot;record_id&#92;&quot;:8,&#92;&quot;year&#92;&quot;:2019,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Bloodstream Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:15.8,&#92;&quot;total_isolates_tested&#92;&quot;:4800,&#92;&quot;resistant_isolates&#92;&quot;:758,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:NaN},{&#92;&quot;record_id&#92;&quot;:9,&#92;&quot;year&#92;&quot;:2020,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Bloodstream Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:17.2,&#92;&quot;total_isolates_tested&#92;&quot;:3900,&#92;&quot;resistant_isolates&#92;&quot;:671,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:NaN},{&#92;&quot;record_id&#92;&quot;:10,&#92;&quot;year&#92;&quot;:2021,&#92;&quot;country&#92;&quot;:&#92;&quot;India&#92;&quot;,&#92;&quot;iso3&#92;&quot;:&#92;&quot;IND&#92;&quot;,&#92;&quot;who_region&#92;&quot;:&#92;&quot;SEARO&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Lower-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;infection_type&#92;&quot;:&#92;&quot;Bloodstream Infection&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:19.4,&#92;&quot;total_isolates_tested&#92;&quot;:4600,&#92;&quot;resistant_isolates&#92;&quot;:893,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;,&#92;&quot;data_source&#92;&quot;:&#92;&quot;WHO GLASS&#92;&quot;,&#92;&quot;notes&#92;&quot;:NaN}]&quot;' data-total-rows='10' data-total-columns='16' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;record_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;year&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;country&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;iso3&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;who_region&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;income_group&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;pathogen&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;antibiotic_class&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;antibiotic_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;infection_type&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;resistance_pct&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;total_isolates_tested&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;resistant_isolates&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;susceptibility_testing_coverage&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;data_source&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;notes&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "75cd54376de82ab2afdf47f9016f4036",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Pare down the dataframe to columns and data of interest for future analysis and view the new dataframe.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "f995d3cfc946c1cb24c84f2f0823c72c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='SFPL-0' random-id='0b705cf1-9bd8-429e-fde4-9949f7645aea'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;record_id&#92;&quot;:129,&#92;&quot;year&#92;&quot;:2020,&#92;&quot;country&#92;&quot;:&#92;&quot;Australia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;High income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;3rd-Gen Cephalosporins&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ceftriaxone&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:9.9,&#92;&quot;total_isolates_tested&#92;&quot;:17500,&#92;&quot;resistant_isolates&#92;&quot;:1733,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;High&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:130,&#92;&quot;year&#92;&quot;:2021,&#92;&quot;country&#92;&quot;:&#92;&quot;Australia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;High income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;3rd-Gen Cephalosporins&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ceftriaxone&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:10.4,&#92;&quot;total_isolates_tested&#92;&quot;:20000,&#92;&quot;resistant_isolates&#92;&quot;:2080,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;High&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:131,&#92;&quot;year&#92;&quot;:2022,&#92;&quot;country&#92;&quot;:&#92;&quot;Australia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;High income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;3rd-Gen Cephalosporins&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ceftriaxone&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:10.7,&#92;&quot;total_isolates_tested&#92;&quot;:21000,&#92;&quot;resistant_isolates&#92;&quot;:2247,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;High&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:132,&#92;&quot;year&#92;&quot;:2023,&#92;&quot;country&#92;&quot;:&#92;&quot;Australia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;High income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Escherichia coli&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;3rd-Gen Cephalosporins&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Ceftriaxone&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:11.0,&#92;&quot;total_isolates_tested&#92;&quot;:22000,&#92;&quot;resistant_isolates&#92;&quot;:2420,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;High&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:133,&#92;&quot;year&#92;&quot;:2018,&#92;&quot;country&#92;&quot;:&#92;&quot;Russia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Upper-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:18.5,&#92;&quot;total_isolates_tested&#92;&quot;:22000,&#92;&quot;resistant_isolates&#92;&quot;:4070,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:134,&#92;&quot;year&#92;&quot;:2019,&#92;&quot;country&#92;&quot;:&#92;&quot;Russia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Upper-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:19.8,&#92;&quot;total_isolates_tested&#92;&quot;:23500,&#92;&quot;resistant_isolates&#92;&quot;:4653,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:135,&#92;&quot;year&#92;&quot;:2020,&#92;&quot;country&#92;&quot;:&#92;&quot;Russia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Upper-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:21.4,&#92;&quot;total_isolates_tested&#92;&quot;:20000,&#92;&quot;resistant_isolates&#92;&quot;:4280,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:136,&#92;&quot;year&#92;&quot;:2021,&#92;&quot;country&#92;&quot;:&#92;&quot;Russia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Upper-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:23.1,&#92;&quot;total_isolates_tested&#92;&quot;:24000,&#92;&quot;resistant_isolates&#92;&quot;:5544,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:137,&#92;&quot;year&#92;&quot;:2022,&#92;&quot;country&#92;&quot;:&#92;&quot;Russia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Upper-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:24.6,&#92;&quot;total_isolates_tested&#92;&quot;:25000,&#92;&quot;resistant_isolates&#92;&quot;:6150,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;},{&#92;&quot;record_id&#92;&quot;:138,&#92;&quot;year&#92;&quot;:2023,&#92;&quot;country&#92;&quot;:&#92;&quot;Russia&#92;&quot;,&#92;&quot;income_group&#92;&quot;:&#92;&quot;Upper-middle income&#92;&quot;,&#92;&quot;pathogen&#92;&quot;:&#92;&quot;Klebsiella pneumoniae&#92;&quot;,&#92;&quot;antibiotic_class&#92;&quot;:&#92;&quot;Carbapenems&#92;&quot;,&#92;&quot;antibiotic_name&#92;&quot;:&#92;&quot;Imipenem&#92;&quot;,&#92;&quot;resistance_pct&#92;&quot;:26.2,&#92;&quot;total_isolates_tested&#92;&quot;:26000,&#92;&quot;resistant_isolates&#92;&quot;:6812,&#92;&quot;susceptibility_testing_coverage&#92;&quot;:&#92;&quot;Moderate&#92;&quot;}]&quot;' data-total-rows='10' data-total-columns='11' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;record_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;year&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;country&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;income_group&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;pathogen&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;antibiotic_class&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;antibiotic_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;resistance_pct&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;total_isolates_tested&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;resistant_isolates&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;susceptibility_testing_coverage&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "d9fa1397d9dd64e4049a1dd8dd53a59c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Ensure the new dataframe doesnt have any missing data.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "82df3802dc376e0b5f7e4ce05915e94d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='RGSE-0' random-id='cd0776ed-9f7e-3653-72e2-3d5805ba2178'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;Index0&#92;&quot;:&#92;&quot;record_id&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;year&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;country&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;income_group&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;pathogen&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;antibiotic_class&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;antibiotic_name&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;resistance_pct&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;total_isolates_tested&#92;&quot;,&#92;&quot;value&#92;&quot;:0},{&#92;&quot;Index0&#92;&quot;:&#92;&quot;resistant_isolates&#92;&quot;,&#92;&quot;value&#92;&quot;:0}]&quot;' data-total-rows='11' data-total-columns='1' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;value&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;Index0&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "75d14e15a0870f0401b6636e7b18471c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Add a new column calculating the mean resistance percentage for each country over all years.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "0f72bb45932df3ea0dd18abf8cdc7c55",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "     record_id  year country         income_group               pathogen  \\\n0            1  2018   India  Lower-middle income       Escherichia coli   \n1            2  2019   India  Lower-middle income       Escherichia coli   \n2            3  2020   India  Lower-middle income       Escherichia coli   \n3            4  2021   India  Lower-middle income       Escherichia coli   \n4            5  2022   India  Lower-middle income       Escherichia coli   \n..         ...   ...     ...                  ...                    ...   \n133        134  2019  Russia  Upper-middle income  Klebsiella pneumoniae   \n134        135  2020  Russia  Upper-middle income  Klebsiella pneumoniae   \n135        136  2021  Russia  Upper-middle income  Klebsiella pneumoniae   \n136        137  2022  Russia  Upper-middle income  Klebsiella pneumoniae   \n137        138  2023  Russia  Upper-middle income  Klebsiella pneumoniae   \n\n     antibiotic_class antibiotic_name  resistance_pct  total_isolates_tested  \\\n0    Fluoroquinolones   Ciprofloxacin            67.2                  12450   \n1    Fluoroquinolones   Ciprofloxacin            68.9                  14200   \n2    Fluoroquinolones   Ciprofloxacin            70.1                  11300   \n3    Fluoroquinolones   Ciprofloxacin            71.4                  13800   \n4    Fluoroquinolones   Ciprofloxacin            72.8                  15600   \n..                ...             ...             ...                    ...   \n133       Carbapenems        Imipenem            19.8                  23500   \n134       Carbapenems        Imipenem            21.4                  20000   \n135       Carbapenems        Imipenem            23.1                  24000   \n136       Carbapenems        Imipenem            24.6                  25000   \n137       Carbapenems        Imipenem            26.2                  26000   \n\n     resistant_isolates susceptibility_testing_coverage  baseline_2018  \\\n0                  8366                        Moderate           67.2   \n1                  9784                        Moderate           67.2   \n2                  7922                        Moderate           67.2   \n3                  9859                        Moderate           67.2   \n4                 11357                        Moderate           67.2   \n..                  ...                             ...            ...   \n133                4653                        Moderate           18.5   \n134                4280                        Moderate           18.5   \n135                5544                        Moderate           18.5   \n136                6150                        Moderate           18.5   \n137                6812                        Moderate           18.5   \n\n     change_since_2018  \n0                  0.0  \n1                  1.7  \n2                  2.9  \n3                  4.2  \n4                  5.6  \n..                 ...  \n133                1.3  \n134                2.9  \n135                4.6  \n136                6.1  \n137                7.7  \n\n[138 rows x 13 columns]\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "d7ef909c-869a-4840-b48c-9e92ab83446b",
+      "code_hash": "61c9ff10118a8b414aa24b9e08001f5c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "     record_id  year country         income_group               pathogen  \\\n0            1  2018   India  Lower-middle income       Escherichia coli   \n1            2  2019   India  Lower-middle income       Escherichia coli   \n2            3  2020   India  Lower-middle income       Escherichia coli   \n3            4  2021   India  Lower-middle income       Escherichia coli   \n4            5  2022   India  Lower-middle income       Escherichia coli   \n..         ...   ...     ...                  ...                    ...   \n133        134  2019  Russia  Upper-middle income  Klebsiella pneumoniae   \n134        135  2020  Russia  Upper-middle income  Klebsiella pneumoniae   \n135        136  2021  Russia  Upper-middle income  Klebsiella pneumoniae   \n136        137  2022  Russia  Upper-middle income  Klebsiella pneumoniae   \n137        138  2023  Russia  Upper-middle income  Klebsiella pneumoniae   \n\n     antibiotic_class antibiotic_name  resistance_pct  total_isolates_tested  \\\n0    Fluoroquinolones   Ciprofloxacin            67.2                  12450   \n1    Fluoroquinolones   Ciprofloxacin            68.9                  14200   \n2    Fluoroquinolones   Ciprofloxacin            70.1                  11300   \n3    Fluoroquinolones   Ciprofloxacin            71.4                  13800   \n4    Fluoroquinolones   Ciprofloxacin            72.8                  15600   \n..                ...             ...             ...                    ...   \n133       Carbapenems        Imipenem            19.8                  23500   \n134       Carbapenems        Imipenem            21.4                  20000   \n135       Carbapenems        Imipenem            23.1                  24000   \n136       Carbapenems        Imipenem            24.6                  25000   \n137       Carbapenems        Imipenem            26.2                  26000   \n\n     resistant_isolates susceptibility_testing_coverage  baseline_2018  \\\n0                  8366                        Moderate           67.2   \n1                  9784                        Moderate           67.2   \n2                  7922                        Moderate           67.2   \n3                  9859                        Moderate           67.2   \n4                 11357                        Moderate           67.2   \n..                  ...                             ...            ...   \n133                4653                        Moderate           18.5   \n134                4280                        Moderate           18.5   \n135                5544                        Moderate           18.5   \n136                6150                        Moderate           18.5   \n137                6812                        Moderate           18.5   \n\n     change_since_2018  \n0                  0.0  \n1                  1.7  \n2                  2.9  \n3                  4.2  \n4                  5.6  \n..                 ...  \n133                1.3  \n134                2.9  \n135                4.6  \n136                6.1  \n137                7.7  \n\n[138 rows x 13 columns]\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "94b4d0969fb637550cdfc65ff87b602f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Visualize</span></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}
