@@ -41,7 +41,7 @@ def _():
     import matplotlib.pyplot as plt
     import seaborn as sns
 
-    return mo, pd
+    return mo, pd, plt, sns
 
 
 @app.cell(hide_code=True)
@@ -118,7 +118,6 @@ def _(df_clean):
     baseline_2018 = (df_clean[df_clean["year"] == 2018][series_cols + ["resistance_pct"]].rename(columns={"resistance_pct": "baseline_2018"}))
     df_change = df_clean.merge(baseline_2018, on=series_cols, how="left")
     df_change["change_since_2018"] = (df_change["resistance_pct"] - df_change["baseline_2018"]).round(2)
-    df_change
     print(df_change)
     return df_change, series_cols
 
@@ -130,11 +129,69 @@ def _(df_change, series_cols):
     return
 
 
+@app.cell
+def _(df_change):
+    latest_year = df_change[df_change["year"]== 2023]
+    income_summary = (latest_year.groupby("income_group").agg(n_series = ("country", "count"), mean_resistance_2018 = ("baseline_2018", "mean"), mean_resistance_2023 = ("resistance_pct", "mean"), mean_change = ("change_since_2018", "mean"), median_change = ("change_since_2018", "median")).round(2).sort_values("mean_change", ascending=False))
+    print(income_summary)
+    return income_summary, latest_year
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Visualize how
+    Visualize the data
     """)
+    return
+
+
+@app.cell
+def _(df_clean, plt, sns):
+    sns.histplot(data = df_clean["resistance_pct"])
+    plt.title("Distribution of Resistance Percentages across all years and countries")
+    plt.xlabel("Resistance Percentage")
+    plt.ylabel("Count")
+    plt.show()
+    return
+
+
+@app.cell
+def _(latest_year, plt, sns):
+    income_order = ["Low income", "Lower-middle income", "Upper-middle income", "High income"]
+    plt.figure(figsize= (11,5))
+    sns.boxplot(data = latest_year, x = "income_group", y= "change_since_2018", order = income_order, hue = "income_group")
+    plt.title("Change in Antimicrobial Resistance, 2018-2023, by Income Group")
+    plt.xlabel("Income Group")
+    plt.ylabel("Change in Resistance since 2018 (percentage points)")
+    plt.show()
+    return (income_order,)
+
+
+@app.cell
+def _(df_change, income_order, plt, sns):
+    sns.lmplot(data=df_change, x="year", y="resistance_pct", hue="income_group", hue_order=income_order, ci=None, x_jitter=0.12, height=6, aspect=1.6, legend=False)
+    plt.title("Antimicrobial Resistance by Year and Income Group, 2018-2023")
+    plt.xlabel("Year")
+    plt.ylabel("Resistant Isolates (%)")
+    plt.legend(title="Income Group", loc="center left", bbox_to_anchor=(1.02, 0.50))
+    plt.tight_layout()
+    plt.show()
+    return
+
+
+@app.cell
+def _(income_summary, plt, sns):
+    plt.figure(figsize=(9,5))
+    sns.barplot(data=income_summary, x="income_group", y="mean_change", hue="income_group")
+    plt.title("Mean Change of Antimicrobial Resistance by Income Group")
+    plt.xlabel("Income Group")
+    plt.ylabel("Mean Change (Percentage Points)")
+    plt.show()
+    return
+
+
+@app.cell
+def _():
     return
 
 
