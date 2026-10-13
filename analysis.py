@@ -1,6 +1,16 @@
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "marimo>=0.23.3",
+#     "matplotlib>=3.11.2",
+#     "pandas>=3.0.6",
+#     "seaborn>=0.13.2",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.25.0"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium")
 
 

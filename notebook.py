@@ -28,7 +28,15 @@ def _(mo):
     <b>Project submission due: October 15, 2026 at 23:59</b>
 
     #Research Question:
-    ##How did resistance change from 2018 to 2023, and did that trend differ by income group?
+    ##What is the relationship between time and antibiotic resistance rates from 2018 to 2023, and does this relationship differ across country income levels?
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Import standard functions that will be used within this notebook such as pandas, numpy and the plotting functions matplotlib.pyplot and seaborn.
     """)
     return
 
@@ -47,7 +55,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Load the target dataset through pandas' read_csv, and inspect the data to show basic descriptors such as head/tail, shape, length, etc.
+    Load the target dataset through pandas' read_csv function, and inspect the data to show basic descriptors such as the number of rows/columns, column names, column data types, and non-null cell counts.
     """)
     return
 
@@ -64,7 +72,7 @@ def _(pd):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Display the dataframe to show each column
+    Display the dataframe to show each column using .head(10).
     """)
     return
 
@@ -107,16 +115,31 @@ def _(df_clean):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Add a new column calculating the mean resistance percentage for each country over all years.
+    Join the country and antibiotic class name columns into a single column for ease of viewing.
     """)
     return
 
 
 @app.cell
 def _(df_clean):
-    series_cols = ["country", "pathogen", "antibiotic_name"]
-    baseline_2018 = (df_clean[df_clean["year"] == 2018][series_cols + ["resistance_pct"]].rename(columns={"resistance_pct": "baseline_2018"}))
-    df_change = df_clean.merge(baseline_2018, on=series_cols, how="left")
+    df_joined = df_clean.assign(country_abx_class=df_clean["country"] + " (" + df_clean["antibiotic_class"] + ")")
+    df_joined
+    return (df_joined,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Add an additional column calculating the mean resistance percentage for each country over all years.
+    """)
+    return
+
+
+@app.cell
+def _(df_joined):
+    series_cols = ["country_abx_class", "pathogen", "antibiotic_name"]
+    baseline_2018 = (df_joined[df_joined["year"] == 2018][series_cols + ["resistance_pct"]].rename(columns={"resistance_pct": "baseline_2018"}))
+    df_change = df_joined.merge(baseline_2018, on=series_cols, how="left")
     df_change["change_since_2018"] = (df_change["resistance_pct"] - df_change["baseline_2018"]).round(2)
     print(df_change)
     return df_change, series_cols
@@ -146,8 +169,8 @@ def _(mo):
 
 
 @app.cell
-def _(df_clean, plt, sns):
-    sns.histplot(data = df_clean["resistance_pct"])
+def _(df_change, plt, sns):
+    sns.histplot(data = df_change["resistance_pct"])
     plt.title("Distribution of Resistance Percentages across all years and countries")
     plt.xlabel("Resistance Percentage")
     plt.ylabel("Count")
@@ -182,7 +205,7 @@ def _(df_change, income_order, plt, sns):
 @app.cell
 def _(income_summary, plt, sns):
     plt.figure(figsize=(9,5))
-    sns.barplot(data=income_summary, x="income_group", y="mean_change", hue="income_group")
+    sns.barplot(data=income_summary, x="mean_change", y="income_group", hue="income_group")
     plt.title("Mean Change of Antimicrobial Resistance by Income Group")
     plt.xlabel("Income Group")
     plt.ylabel("Mean Change (Percentage Points)")
