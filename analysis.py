@@ -59,6 +59,15 @@ def _(plt, resist, sns):
     return
 
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ### E. coli
+    E. coli resistance is rising in most of the countries in the analysis. India has the highest rate, with 74.1% resistant to ciprofloxacin in 2023, an increase from 67.2% in 2018. Pakistan increased the most, from 55.4% to 63.1% resistance to ceftriaxone, followed by Nigeria with a 48.3% to 55.7% increase. In contrast, Sweden (9.4%), Australia (11.0%), and Germany (20.9%) did not have as drastic of an increase. Germany was the only country where E. coli resistance decreased.
+    """)
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -77,6 +86,15 @@ def _(plt, resist, sns):
     plt.ylabel("% resistant")
     plt.legend(title="Country (antibiotic)", bbox_to_anchor=(1, 1))
     plt.show()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("""
+    ### Klebsiella pneumoniae
+    Most Klebsiella results measure resistance to imipenem, a carbapenem antibiotic usually saved for more serious infections when other medications fail. Indonesia (28.4% to 41.2%) and India (13.5% to 25.8%) increased the most, with India's rate nearly doubling in six years. South Africa had the highest rate of 59.2%, but South Africa was tested against a different antibiotic, cefotaxime. Italy was the only country to improve with resistance over time, falling from 32.5% in 2020 to 27.3% in 2023.
+    """)
     return
 
 
@@ -101,6 +119,15 @@ def _(plt, resist, sns):
     return
 
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ### Staphylococcus aureus (MRSA)
+    MRSA shows a clear split between countries. Japan had the largest improvement in the dataset, decreasing from 48.2% to 38.6%, and Germany decreased from 12.6% to 9.3%. Meanwhile, Pakistan increased from 37.2% to 41.4% and Kenya increased from 29.4% to 34.0%. Japan still has a higher resistance than Germany, which shows that a country can be improving while still having a high rate.
+    """)
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -119,6 +146,15 @@ def _(plt, resist, sns):
     plt.ylabel("% resistant")
     plt.legend(title="Country", bbox_to_anchor=(1, 1))
     plt.show()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("""
+    ### Acinetobacter
+    Acinetobacter has some of the highest resistance rates in the dataset. More than half of the samples were resistant to imipenem in both countries by 2023: Egypt increased from 62.4% to 70.2% and Brazil from 48.2% to 56.2%. Because imipenem is a last-resort antibiotic, these rates mean doctors have very few treatment options left for these infections.
+    """)
     return
 
 
@@ -143,6 +179,15 @@ def _(plt, resist, sns):
     return
 
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ### Salmonella
+    Only Ethiopia has Salmonella data, so it can't be compared with other countries. Ethiopia's resistance to ciprofloxacin nearly doubled, from 12.4% in 2018 to 23.8% in 2023, rising steadily every year.
+    """)
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -161,6 +206,15 @@ def _(plt, resist, sns):
     plt.ylabel("% resistant")
     plt.legend(title="Country", loc="upper left")
     plt.show()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("""
+    ### Shigella
+    Only Bangladesh has Shigella data. Its resistance to ciprofloxacin increased from 18.5% to 46.8%. This is the fastest increase in the entire dataset, and the rate grew more than 2.5 times in six years.
+    """)
     return
 
 
@@ -195,6 +249,15 @@ def _(change, plt, sns):
     return
 
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ### Change in Resistance, 2018 to 2023
+    Resistance increased in 19 of the 23 country and antibiotic combinations. The four countries that had decreased resistance were Japan (MRSA), Germany (MRSA), Italy (Klebsiella), and Germany (E. coli), all high-income countries. The largest increases were in lower-middle income countries: Bangladesh (Shigella, +28.3 points), Indonesia (Klebsiella, +12.8 points), and India (Klebsiella, +12.3 points).
+    """)
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -222,6 +285,15 @@ def _(plt, resist, sns):
     return
 
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ### Resistance by Income Group, 2023
+    High-income countries had much lower resistance, with a median of about 12%, compared with about 47% for lower-middle income countries and 48% for upper-middle income countries. Japan's MRSA rate (38.6%) is an outlier among high-income countries. The low-income group contains only one country (Ethiopia), so it can't be used to draw conclusions about low-income countries.
+    """)
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -244,6 +316,15 @@ def _(plt, resist, sns):
     plt.ylabel("")
     plt.legend(title="Income group", loc="lower right")
     plt.show()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("""
+    ### Comparing Countries Fairly: E. coli and Ciprofloxacin, 2023
+    All five countries were tested on the same bacteria and the same antibiotic. Resistance follows income level closely: lower-middle income India (74.1%) and Nigeria (55.7%) were highest, upper-middle income Mexico (43.5%) was in the middle, and high-income Germany (20.9%) and Sweden (9.4%) were lowest. India's resistance rate is almost eight times higher than Sweden's.
+    """)
     return
 
 
