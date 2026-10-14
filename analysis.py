@@ -483,8 +483,118 @@ def _(drug_2023, plt, sns):
     plt.xscale("log")
     plt.title("Samples Tested vs. Resistance, 2023")
     plt.xlabel("Number of samples tested (log scale)")
-    plt.ylabel("% resistant")
+    plt.ylabel("Percent Resistant")
     plt.legend(title="Income group", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Ciprofloxacin
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist, sns):
+    cipro = resist[resist["antibiotic_name"] == "Ciprofloxacin"]
+
+    sns.lineplot(data=cipro, x="year", y="resistance_pct", hue="country", errorbar=None)
+    plt.title("Resistance to Ciprofloxacin, 2018 to 2023")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.xlim(2018, 2023)
+    plt.legend(title="Country", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Imipenem
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist, sns):
+    imipenem = resist[resist["antibiotic_name"] == "Imipenem"]
+
+    sns.lineplot(data=imipenem, x="year", y="resistance_pct", hue="country", errorbar=None)
+    plt.title("Resistance to Imipenem, 2018 to 2023")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.xlim(2018, 2023)
+    plt.legend(title="Country", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Ceftriaxone
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist, sns):
+    ceftriaxone = resist[resist["antibiotic_name"] == "Ceftriaxone"]
+
+    sns.lineplot(data=ceftriaxone, x="year", y="resistance_pct", hue="country", errorbar=None)
+    plt.title("Resistance to Ceftriaxone, 2018 to 2023")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.xlim(2018, 2023)
+    plt.legend(title="Country", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Cefotaxime
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist, sns):
+    cefotaxime = resist[resist["antibiotic_name"] == "Cefotaxime"]
+
+    sns.lineplot(data=cefotaxime, x="year", y="resistance_pct", hue="country", errorbar=None)
+    plt.title("Resistance to Cefotaxime, 2018 to 2023")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.xlim(2018, 2023)
+    plt.legend(title="Country", loc="upper left")
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Methicillin (MRSA)
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist, sns):
+    mrsa = resist[resist["antibiotic_name"] == "Methicillin (MRSA)"]
+
+    sns.lineplot(data=mrsa, x="year", y="resistance_pct", hue="country", errorbar=None)
+    plt.title("Resistance to Methicillin (MRSA), 2018 to 2023")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.xlim(2018, 2023)
+    plt.legend(title="Country", bbox_to_anchor=(1, 1))
     plt.show()
     return
 
