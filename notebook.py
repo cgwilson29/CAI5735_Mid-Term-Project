@@ -11,7 +11,7 @@
 
 import marimo
 
-__generated_with = "0.24.2"
+__generated_with = "0.25.1"
 app = marimo.App(width="medium", auto_download=["html"])
 
 
@@ -191,8 +191,29 @@ def _(income_summary, plt, sns):
 
 
 @app.cell
-def _():
-    return
+def _(df_clean, plt, sns):
+    by_pathogen = df_clean.groupby("pathogen").agg(
+        total_tested=("total_isolates_tested", "sum"),
+        mean_resistance=("resistance_pct", "mean"),
+        countries=("country", "nunique"),
+    ).reset_index()
+
+    plt.figure(figsize=(9, 6))
+    sns.scatterplot(data=by_pathogen, x="total_tested", y="mean_resistance",
+                    hue="pathogen", size="countries", sizes=(100, 600), legend=False)
+    for _, _row in by_pathogen.iterrows():
+        _n = _row["countries"]
+        plt.annotate(f"{_row['pathogen']} ({_n} {'country' if _n == 1 else 'countries'})",
+                     (_row["total_tested"], _row["mean_resistance"]),
+                     fontsize=9, xytext=(10, 5), textcoords="offset points")
+    plt.xscale("log")
+    plt.xlim(5000, 4e6)
+    plt.ylim(0, 70)
+    plt.title("Total Isolates Tested vs. Mean Resistance by Microbe, 2018-2023")
+    plt.xlabel("Total isolates tested (log scale)")
+    plt.ylabel("Mean % resistant")
+    plt.show()
+    return (by_pathogen,)
 
 
 if __name__ == "__main__":
