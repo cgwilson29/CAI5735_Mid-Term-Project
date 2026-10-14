@@ -287,7 +287,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    **E. Coli vs Ciprofloxacin in 2023**
+    **E. Coli Resistance to Ciprofloxacin in 2023**
     """)
     return
 
@@ -315,6 +315,177 @@ def _(mo):
     ### Comparing Countries Fairly: E. coli and Ciprofloxacin, 2023
     All five countries were tested on the same bacteria and the same antibiotic. Resistance follows income level closely: lower-middle income India (74.1%) and Nigeria (55.7%) were highest, upper-middle income Mexico (43.5%) was in the middle, and high-income Germany (20.9%) and Sweden (9.4%) were lowest. India's resistance rate is almost eight times higher than Sweden's.
     """)
+    return
+
+
+@app.cell
+def _(resist):
+    resist_by_drug = resist.assign(country_bacteria=resist["country"] + " (" + resist["pathogen"] + ")")
+    resist_by_drug
+    return (resist_by_drug,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Fluoroquinolones (ciprofloxacin)**
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist_by_drug, sns):
+    fluoroquinolones = resist_by_drug[resist_by_drug["antibiotic_class"] == "Fluoroquinolones"]
+
+    sns.lineplot(data=fluoroquinolones, x="year", y="resistance_pct", hue="country_bacteria", errorbar=None)
+    plt.title("Resistance to Fluoroquinolones (Ciprofloxacin) Over Time")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.legend(title="Country (bacteria)", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Carbapenems (imipenem)**
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist_by_drug, sns):
+    carbapenems = resist_by_drug[resist_by_drug["antibiotic_class"] == "Carbapenems"]
+
+    sns.lineplot(data=carbapenems, x="year", y="resistance_pct", hue="country_bacteria", errorbar=None)
+    plt.title("Resistance to Carbapenems (Imipenem) Over Time")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.legend(title="Country (bacteria)", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **3rd-generation cephalosporins (ceftriaxone and cefotaxime)**
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist_by_drug, sns):
+    cephalosporins = resist_by_drug[resist_by_drug["antibiotic_class"] == "3rd-Gen Cephalosporins"]
+
+    sns.lineplot(data=cephalosporins, x="year", y="resistance_pct", hue="country_bacteria", errorbar=None)
+    plt.title("Resistance to 3rd-Generation Cephalosporins Over Time")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.legend(title="Country (bacteria)", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Methicillin (MRSA)**
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist_by_drug, sns):
+    methicillin = resist_by_drug[resist_by_drug["antibiotic_class"] == "Methicillin"]
+
+    sns.lineplot(data=methicillin, x="year", y="resistance_pct", hue="country", errorbar=None)
+    plt.title("Resistance to Methicillin (MRSA) Over Time")
+    plt.xlabel("Year")
+    plt.ylabel("Percent Resistant")
+    plt.legend(title="Country", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **All four antibiotic classes on one chart**
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist_by_drug, sns):
+    sns.lineplot(data=resist_by_drug, x="year", y="resistance_pct", hue="antibiotic_class", errorbar=None)
+    plt.title("Average Resistance by Antibiotic Class Over Time")
+    plt.xlabel("Year")
+    plt.ylabel("Average Percent Resistant")
+    plt.legend(title="Antibiotic class", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell
+def _(resist_by_drug):
+    drug_2023 = resist_by_drug[resist_by_drug["year"] == 2023]
+    drug_2023
+    return (drug_2023,)
+
+
+@app.cell
+def _(drug_2023, plt, sns):
+    sns.boxplot(
+        data=drug_2023,
+        x="antibiotic_class",
+        y="resistance_pct",
+        hue="antibiotic_class",
+        order=["Fluoroquinolones", "Carbapenems", "3rd-Gen Cephalosporins", "Methicillin"],
+    )
+    plt.title("Antibiotic Resistance by Antibiotic Class, 2023")
+    plt.xlabel("Antibiotic class")
+    plt.ylabel("Percent Resistant")
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Average Resistance by Antibiotic Class**
+    """)
+    return
+
+
+@app.cell
+def _(drug_2023, plt, sns):
+    sns.barplot(data=drug_2023, x="antibiotic_class", y="resistance_pct", hue="antibiotic_class", errorbar=None)
+    plt.title("Average Resistance by Antibiotic Class, 2023")
+    plt.xlabel("Antibiotic class")
+    plt.ylabel("Average Percent Resistant")
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Samples Tested vs. Resistance**
+    """)
+    return
+
+
+@app.cell
+def _(drug_2023, plt, sns):
+    sns.scatterplot(data=drug_2023, x="total_isolates_tested", y="resistance_pct", hue="income_group")
+    plt.xscale("log")
+    plt.title("Samples Tested vs. Resistance, 2023")
+    plt.xlabel("Number of samples tested (log scale)")
+    plt.ylabel("% resistant")
+    plt.legend(title="Income group", bbox_to_anchor=(1, 1))
+    plt.show()
     return
 
 
