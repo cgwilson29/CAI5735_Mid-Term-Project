@@ -1,13 +1,25 @@
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "marimo>=0.23.3",
+#     "matplotlib>=3.11.2",
+#     "pandas>=3.0.6",
+#     "seaborn>=0.13.2",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.25.0"
+__generated_with = "0.25.1"
 app = marimo.App(width="medium")
 
 
 @app.cell
 def _():
+    # Import the necessary functions to run the notebook, including marimo, pandas and numpy for analysis/calculations, matplotlib.pyplot and seaborn for visualizations.
     import marimo as mo
     import pandas as pd
+    import numpy as np
     import matplotlib.pyplot as plt
     import seaborn as sns
 
@@ -16,6 +28,7 @@ def _():
 
 @app.cell
 def _(pd):
+    # Use pd.read_csv to import the target datafile for analysis and call the dataframe to review the columns for inspection.
     df = pd.read_csv("amr_global_resistance_rates.csv")
     df
     return (df,)
@@ -23,15 +36,24 @@ def _(pd):
 
 @app.cell
 def _(df):
+    # Add a column to the dataframe combining the country name and antibiotic name.
     resist = df.assign(label=df["country"] + " (" + df["antibiotic_name"] + ")")
     resist
     return (resist,)
+
+
+@app.cell
+def _(df):
+    # Inspect the dataframe using standardized functions: .info() combines indexes, column names, non-null counts, and data types into a single table for review.
+    df.info()
+    return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
     **Antibiotic Resistance Over Time - E. Coli**
+    Create a lineplot showing the resistance trends over time, colorcoded by country, based on each bacterial species.
     """)
     return
 
@@ -62,6 +84,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     **Antibiotic Resistence Over Time - Klebsiella Pneumoniae**
+    Create a lineplot showing the resistance trends over time, colorcoded by country, based on each bacterial species.
     """)
     return
 
@@ -92,6 +115,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     **Antibiotic Resistence Over Time - Staphylococcus aureus (MRSA)**
+    Create a lineplot showing the resistance trends over time, colorcoded by country, based on each bacterial species.
     """)
     return
 
@@ -122,6 +146,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     **Antibiotic Resistence Over Time - Acinetobacter**
+    Create a lineplot showing the resistance trends over time, colorcoded by country, based on each bacterial species.
     """)
     return
 
@@ -152,6 +177,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     **Antibiotic Resistence Over Time - Salmonella**
+    Create a lineplot showing the resistance trends over time, colorcoded by country, based on each bacterial species.
     """)
     return
 
@@ -182,6 +208,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     **Antibiotic Resistence Over Time - Shigella**
+    Create a lineplot showing the resistance trends over time, colorcoded by country, based on each bacterial species.
     """)
     return
 
@@ -212,6 +239,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     **Change In Resistance from 2018 to 2023**
+    Create a table comparing the difference in resistance percent from 2018 to 2023 and label each as rising or falling based on whether the difference is positive or negative. Then create a barplot to visualize the sorted outcome.
     """)
     return
 
@@ -252,6 +280,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     **Resistance by Income Group in 2023**
+    Create a boxplot to visualize the 2023 antibiotic resistance by income group.
     """)
     return
 
@@ -288,6 +317,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     **E. Coli Resistance to Ciprofloxacin in 2023**
+    Create a barplot showing the 2023 antibiotic resistance of E. coli to ciprofloxacin.
     """)
     return
 
@@ -320,6 +350,7 @@ def _(mo):
 
 @app.cell
 def _(resist):
+    # Add a column joining the country and pathogen for future identification.
     resist_by_drug = resist.assign(country_bacteria=resist["country"] + " (" + resist["pathogen"] + ")")
     resist_by_drug
     return (resist_by_drug,)
@@ -329,6 +360,7 @@ def _(resist):
 def _(mo):
     mo.md(r"""
     **Fluoroquinolones (ciprofloxacin)**
+    Create a lineplot showing antibiotic resistance of of ciprofloxacin over time.
     """)
     return
 
@@ -350,6 +382,7 @@ def _(plt, resist_by_drug, sns):
 def _(mo):
     mo.md(r"""
     **Carbapenems (imipenem)**
+    Create a lineplot showing antibiotic resistance of of imipenem over time.
     """)
     return
 
@@ -371,6 +404,7 @@ def _(plt, resist_by_drug, sns):
 def _(mo):
     mo.md(r"""
     **3rd-generation cephalosporins (ceftriaxone and cefotaxime)**
+    Create a lineplot showing antibiotic resistance of of cephalosporins over time.
     """)
     return
 
@@ -392,6 +426,7 @@ def _(plt, resist_by_drug, sns):
 def _(mo):
     mo.md(r"""
     **Methicillin (MRSA)**
+    Create a lineplot showing antibiotic resistance of of methicillin over time.
     """)
     return
 
@@ -413,6 +448,7 @@ def _(plt, resist_by_drug, sns):
 def _(mo):
     mo.md(r"""
     **All four antibiotic classes on one chart**
+    Create a lineplot showing antibiotic resistance of all antibiotic classes over time on a single chart.
     """)
     return
 
@@ -430,6 +466,7 @@ def _(plt, resist_by_drug, sns):
 
 @app.cell
 def _(resist_by_drug):
+    # Filter the data to include only 2023 data, then generate a boxplot and barplot of resistance by antibiotic class.
     drug_2023 = resist_by_drug[resist_by_drug["year"] == 2023]
     drug_2023
     return (drug_2023,)
@@ -473,6 +510,7 @@ def _(drug_2023, plt, sns):
 def _(mo):
     mo.md(r"""
     **Samples Tested vs. Resistance**
+    Create a scatterplot showing the number of samples tested versus antibiotic resistance in 2023.
     """)
     return
 
@@ -493,6 +531,7 @@ def _(drug_2023, plt, sns):
 def _(mo):
     mo.md(r"""
     Ciprofloxacin
+    Create a lineplot to trend the antibiotic resistance to Ciprofloxacin over time, by country.
     """)
     return
 
@@ -515,6 +554,7 @@ def _(plt, resist, sns):
 def _(mo):
     mo.md(r"""
     Imipenem
+    Create a lineplot to trend the antibiotic resistance to imipenem over time, by country.
     """)
     return
 
@@ -537,6 +577,7 @@ def _(plt, resist, sns):
 def _(mo):
     mo.md(r"""
     Ceftriaxone
+    Create a lineplot to trend the antibiotic resistance to ceftriaxone over time, by country.
     """)
     return
 
@@ -559,6 +600,7 @@ def _(plt, resist, sns):
 def _(mo):
     mo.md(r"""
     Cefotaxime
+    Create a lineplot to trend the antibiotic resistance to cefotaxime over time, by country.
     """)
     return
 
@@ -581,6 +623,7 @@ def _(plt, resist, sns):
 def _(mo):
     mo.md(r"""
     Methicillin (MRSA)
+    Create a lineplot to trend the antibiotic resistance to methicillin over time, by country.
     """)
     return
 
@@ -595,6 +638,39 @@ def _(plt, resist, sns):
     plt.ylabel("Percent Resistant")
     plt.xlim(2018, 2023)
     plt.legend(title="Country", bbox_to_anchor=(1, 1))
+    plt.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Antibiotic Resistance in 2018 vs. 2023**
+    Create a scatterplot comparing each country and antibiotic's resistance in 2018 to 2023, colorcoded by income group. Points above the dashed line increased in resistance.
+    """)
+    return
+
+
+@app.cell
+def _(plt, resist, sns):
+    # Pivot so each country/antibiotic pair has its 2018 and 2023 values side by side, keeping income group for color.
+    scatter_wide = resist.pivot_table(index=["label", "income_group"], columns="year", values="resistance_pct").reset_index()
+
+    sns.scatterplot(
+        data=scatter_wide,
+        x=2018,
+        y=2023,
+        hue="income_group",
+        hue_order=["Low income", "Lower-middle income", "Upper-middle income", "High income"],
+        s=60,
+    )
+    plt.plot([0, 80], [0, 80], linestyle="--", color="gray", label="No change")
+    plt.xlim(0, 80)
+    plt.ylim(0, 80)
+    plt.title("Antibiotic Resistance in 2018 vs. 2023")
+    plt.xlabel("Percent Resistant in 2018")
+    plt.ylabel("Percent Resistant in 2023")
+    plt.legend(title="Income group", bbox_to_anchor=(1, 1))
     plt.show()
     return
 
